@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kết quả tìm kiếm người dùng</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Kết quả tìm kiếm cho "{{ query }}"</h2>
+        {% if users %}
+            <ul class="list-group">
+                {% for user in users %}
+                    <li class="list-group-item">
+                        <!-- Thêm link để dẫn đến trang sản phẩm của người dùng -->
+                        <a href="{{ url_for('user_products', uid=user.uid) }}">
+                            {{ user.username }} - UID: {{ user.uid }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Không tìm thấy người dùng nào.</p>
+        {% endif %}
+        <a href="{{ url_for('index') }}" class="btn btn-link">Quay lại trang chủ</a>
+    </div>
+</body>
+</html>

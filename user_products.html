@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sản phẩm của {{ user.username }}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Sản phẩm của {{ user.username }}</h2>
+        {% if products %}
+            <div class="row">
+                {% for product in products %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <p class="card-text">Giá: {{ product.price }} VNĐ</p>
+                                <p class="card-text">Mô tả: {{ product.description if product.description else 'Không có mô tả' }}</p>
+                                <form action="{{ url_for('add_to_cart', product_id=product.id) }}" method="POST">
+                                    <div class="form-group">
+                                        <label for="quantity">Số lượng:</label>
+                                        <input type="number" name="quantity" class="form-control" min="1" value="1" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Thêm vào giỏ hàng</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-center">Không có sản phẩm nào được tìm thấy.</p>
+        {% endif %}
+        <a href="{{ url_for('index') }}" class="btn btn-link">Quay lại trang chủ</a>
+    </div>
+</body>
+</html>
